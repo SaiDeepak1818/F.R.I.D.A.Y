@@ -16,7 +16,7 @@
   --color-muted:           var(--muted);
   --color-muted-foreground:var(--muted-foreground);
 
-  /* Royal Blue palette (reverted — do not change) */
+  /* Royal Blue palette (do not change) */
   --color-indigo-50:  #eff6ff;
   --color-indigo-100: #dbeafe;
   --color-indigo-200: #bfdbfe;
@@ -39,7 +39,6 @@
   --color-blue-800: #1e40af;
   --color-blue-900: #1e3a8a;
 
-  /* Coral glass accent */
   --color-brand-coral: #eb6658;
 
   --tracking-tightest: -0.06em;
@@ -72,13 +71,12 @@
 
 /* ═══════════════════════════════════════════
    GLASS MORPHISM SYSTEM
-   Light mode: white glass (Apple style)
-   Dark mode:  deep indigo glass — css.glass spec
-               rgba(36,28,78,…) + blur(10px)
+   Light: white Apple glass
+   Dark:  deep indigo — css.glass spec
+          rgba(36,28,78,…) + blur(10px)
    ═══════════════════════════════════════════ */
 @layer utilities {
 
-  /* ── Glass Card (stat cards, chart panels, form sections) ── */
   .glass-card {
     background: rgba(255,255,255,0.70);
     backdrop-filter: saturate(180%) blur(20px);
@@ -102,7 +100,6 @@
     box-shadow: 0 8px 40px rgba(0,0,0,0.40), 0 0 0 1px rgba(100,80,180,0.25), 0 1px 0 rgba(255,255,255,0.04) inset;
   }
 
-  /* ── Glass Panel (filter bars, small pill groups) ── */
   .glass-panel {
     background: rgba(255,255,255,0.58);
     backdrop-filter: blur(12px);
@@ -117,7 +114,6 @@
     -webkit-backdrop-filter: blur(10px);
   }
 
-  /* ── Glass Input / Textarea / Select ── */
   .glass-input {
     background: rgba(255,255,255,0.80) !important;
     border: 1px solid rgba(0,0,0,0.08) !important;
@@ -134,7 +130,6 @@
   }
   .dark .glass-input::placeholder { color: #6b5fa0 !important; }
 
-  /* ── Glass Sidebar ── */
   .glass-sidebar {
     background: rgba(255,255,255,0.82);
     backdrop-filter: saturate(180%) blur(24px);
@@ -146,7 +141,6 @@
     border-right: 1px solid rgba(36,28,78,0.78);
   }
 
-  /* ── Glass Topbar ── */
   .glass-topbar {
     background: rgba(255,255,255,0.82);
     backdrop-filter: saturate(180%) blur(24px);
@@ -158,7 +152,6 @@
     border-bottom: 1px solid rgba(36,28,78,0.78);
   }
 
-  /* ── Coral Glass Button — exact css.glass spec ── */
   .btn-coral-glass {
     background: rgba(235,102,88,0.47);
     border-radius: 16px;
@@ -173,92 +166,51 @@
     background: rgba(235,102,88,0.66);
     box-shadow: 0 4px 30px rgba(235,102,88,0.25);
   }
-  .btn-coral-glass:active:not(:disabled) {
-    background: rgba(235,102,88,0.80);
-  }
+  .btn-coral-glass:active:not(:disabled) { background: rgba(235,102,88,0.80); }
   .btn-coral-glass:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
 /* ═══════════════════════════════════════════
-   LIGHT MODE — TEXT READABILITY IN GLASS
-   Override dark-mode text colors scoped to
-   glass containers. Covers all text-bearing
-   elements except <button> which handle their
-   own text color.
+   LIGHT MODE — GLOBAL TEXT VISIBILITY FIX
+   App was built dark-only; text-white is
+   invisible on #f2f2f7. Single global override
+   with targeted restore for colored-bg elements.
    ═══════════════════════════════════════════ */
-:root:not(.dark) .glass-card p.text-white,
-:root:not(.dark) .glass-card span.text-white,
-:root:not(.dark) .glass-card div.text-white,
-:root:not(.dark) .glass-card h1.text-white,
-:root:not(.dark) .glass-card h2.text-white,
-:root:not(.dark) .glass-card h3.text-white,
-:root:not(.dark) .glass-card h4.text-white,
-:root:not(.dark) .glass-card h5.text-white,
-:root:not(.dark) .glass-card h6.text-white,
-:root:not(.dark) .glass-card label.text-white,
-:root:not(.dark) .glass-panel p.text-white,
-:root:not(.dark) .glass-panel span.text-white,
-:root:not(.dark) .glass-panel div.text-white,
-:root:not(.dark) .glass-panel h1.text-white,
-:root:not(.dark) .glass-panel h2.text-white,
-:root:not(.dark) .glass-panel h3.text-white,
-:root:not(.dark) .glass-panel label.text-white,
-:root:not(.dark) .glass-sidebar p.text-white,
-:root:not(.dark) .glass-sidebar span.text-white,
-:root:not(.dark) .glass-sidebar div.text-white,
-:root:not(.dark) .glass-topbar  p.text-white,
-:root:not(.dark) .glass-topbar  span.text-white,
-:root:not(.dark) .glass-topbar  div.text-white,
-:root:not(.dark) .glass-topbar  h1.text-white,
-:root:not(.dark) .glass-topbar  h2.text-white { color: #1c1c1e; }
 
-:root:not(.dark) .glass-card .text-slate-200,
-:root:not(.dark) .glass-card .text-slate-300,
-:root:not(.dark) .glass-panel .text-slate-200,
-:root:not(.dark) .glass-panel .text-slate-300 { color: #3c3c43; }
+/* All text-white → near-black in light mode */
+:root:not(.dark) .text-white { color: #1c1c1e; }
 
-:root:not(.dark) .glass-card .text-slate-400,
-:root:not(.dark) .glass-panel .text-slate-400,
-:root:not(.dark) .glass-sidebar .text-slate-400,
-:root:not(.dark) .glass-topbar  .text-slate-400 { color: #6c6c70; }
-
-:root:not(.dark) .glass-card .text-slate-500,
-:root:not(.dark) .glass-panel .text-slate-500,
-:root:not(.dark) .glass-sidebar .text-slate-500,
-:root:not(.dark) .glass-topbar  .text-slate-500 { color: #8a8a8e; }
-
-/* Preserve white text on colored bg inside cards */
-:root:not(.dark) .glass-card [class~="bg-blue-600"],
-:root:not(.dark) .glass-card [class~="bg-blue-500"],
-:root:not(.dark) .glass-card [class~="bg-emerald-500"],
-:root:not(.dark) .glass-card [class~="bg-indigo-600"],
-:root:not(.dark) .glass-card .btn-coral-glass { color: white; }
+/* Restore white on elements with solid colored backgrounds */
+:root:not(.dark) [class~="bg-blue-600"],
+:root:not(.dark) [class~="bg-blue-500"],
+:root:not(.dark) [class~="bg-emerald-500"],
+:root:not(.dark) [class~="bg-indigo-600"],
+:root:not(.dark) [class~="bg-indigo-700"],
+:root:not(.dark) .btn-coral-glass { color: white; }
 
 /* ═══════════════════════════════════════════
    F.R.I.D.A.Y WATERMARK
-   Diagonal text, bottom-left → top-right
+   Centered on screen, slanting bottom-left
+   to top-right, passes through screen centre
    ═══════════════════════════════════════════ */
 .friday-watermark {
   position: fixed;
-  bottom: -4%;
-  left: 0;
+  top: 55%;
+  left: 50%;
   font-family: var(--font-display);
   font-size: clamp(8rem, 21vw, 26rem);
   font-weight: 900;
   font-style: italic;
   letter-spacing: 0.06em;
   line-height: 1;
-  transform: rotate(-32deg);
-  transform-origin: bottom left;
+  transform: translate(-50%, -50%) rotate(-32deg);
   pointer-events: none;
   user-select: none;
   z-index: 0;
   white-space: nowrap;
   color: rgba(28,28,30,0.045);
 }
-.dark .friday-watermark {
-  color: rgba(200,190,255,0.045);
-}
+.dark .friday-watermark { color: rgba(200,190,255,0.045); }
 
 /* ═══════════════════════════════════════════
    GLOBAL
