@@ -1578,7 +1578,7 @@ TECHNICAL NOTES:
         {displayedPage === 'login' && (
           <div className="flex-1 flex flex-col overflow-y-auto">
             {/* Login Header brand */}
-            <div className="h-14 border-b border-white/5 bg-[#0e0101] px-6 flex items-center justify-between shrink-0">
+            <div className="h-14 border-b border-white/5 bg-[#0b0b0b] px-6 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
                   <Zap size={14} className="text-white fill-white/20 animate-pulse" />
@@ -1592,7 +1592,7 @@ TECHNICAL NOTES:
                 {/* Theme Mode Toggle Button */}
                 <button
                   onClick={toggleTheme}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-[#160404] hover:bg-[#2a0808] border border-white/10 text-amber-400 cursor-pointer"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-[#141414] hover:bg-[#222222] border border-white/10 text-amber-400 cursor-pointer"
                   title="Switch Theme"
                 >
                   {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
@@ -1606,7 +1606,7 @@ TECHNICAL NOTES:
 
             {/* Login Center Column */}
             <div className="flex-1 flex items-center justify-center p-6">
-              <div className="w-full max-w-[450px] bg-[#160404] border border-slate-800 rounded-2xl p-9 shadow-2xl relative">
+              <div className="w-full max-w-[450px] bg-white dark:bg-[#141414] border border-black/[0.08] dark:border-slate-800 rounded-2xl p-9 shadow-2xl relative">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-t-2xl" />
                 
                 <div className="text-[10px] font-mono text-slate-500 tracking-widest uppercase mb-1.5 flex items-center gap-2">
@@ -1627,7 +1627,7 @@ TECHNICAL NOTES:
                     type="text" 
                     value={loginIdInput}
                     onChange={(e) => setLoginIdInput(e.target.value)}
-                    className="w-full bg-[#0e0101] border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-xs font-mono font-medium text-emerald-400 focus:outline-none focus:border-blue-500 transition-all shadow-inner"
+                    className="w-full bg-[#0b0b0b] border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-xs font-mono font-medium text-emerald-400 focus:outline-none focus:border-blue-500 transition-all shadow-inner"
                     placeholder="neo10506"
                   />
                 </div>
@@ -1640,7 +1640,7 @@ TECHNICAL NOTES:
                     type="password" 
                     value={loginPasswordInput}
                     onChange={(e) => setLoginPasswordInput(e.target.value)}
-                    className="w-full bg-[#0e0101] border border-slate-800 rounded-xl py-2.5 pl-10 pr-10 text-xs font-mono text-slate-300 focus:outline-none focus:border-blue-500 transition-all shadow-inner"
+                    className="w-full bg-[#0b0b0b] border border-slate-800 rounded-xl py-2.5 pl-10 pr-10 text-xs font-mono text-slate-300 focus:outline-none focus:border-blue-500 transition-all shadow-inner"
                     placeholder="••••••••"
                   />
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 cursor-pointer">
@@ -1755,13 +1755,13 @@ TECHNICAL NOTES:
               <div className="flex-1" />
 
               {/* Theme switcher */}
-              <div className="w-9 py-1 bg-slate-100 dark:bg-[#0e0101] border border-slate-200/60 dark:border-indigo-500/10 rounded-full flex flex-col items-center gap-1.5 p-1 select-none shadow-sm">
+              <div className="w-9 py-1 bg-slate-100 dark:bg-[#0b0b0b] border border-slate-200/60 dark:border-indigo-500/10 rounded-full flex flex-col items-center gap-1.5 p-1 select-none shadow-sm">
                 <button
                   onClick={() => setTheme('dark')}
                   className={cn(
                     "w-7 h-7 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer",
                     theme === 'dark'
-                      ? "bg-[#160404] text-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.2)] border border-amber-500/10"
+                      ? "bg-[#141414] text-[#ff7c73] shadow-[0_0_8px_rgba(230,10,10,0.2)] border border-[#e60a0a]/10"
                       : "text-slate-400 hover:text-slate-600"
                   )}
                   title="Dark Theme"
@@ -1806,7 +1806,7 @@ TECHNICAL NOTES:
             <div className="flex-1 flex flex-col overflow-hidden text-foreground">
               
               {/* Horizontal Topbar with brand IAMNEO logo and user capsule */}
-              <div className="h-14 border-b border-white/[0.06] bg-[#110101] px-6 flex items-center justify-between shrink-0 select-none">
+              <div className="h-14 border-b border-white/[0.06] bg-[#0d0d0d] px-6 flex items-center justify-between shrink-0 select-none">
                 <div className="flex items-center gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-[#10b981]" />
                   <span className="text-xs font-black tracking-widest text-slate-800 dark:text-white uppercase font-display">IAMNEO</span>
@@ -1856,19 +1856,19 @@ TECHNICAL NOTES:
                     </div>
 
                     {/* Filter bar */}
-                    <div className="flex flex-wrap items-center gap-2 p-3 rounded-2xl bg-[#1a0404] border border-white/[0.06]">
-                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#160404] border border-white/[0.06]">
+                    <div className="flex flex-wrap items-center gap-2 p-3 rounded-2xl bg-[#161616] border border-white/[0.06]">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#141414] border border-white/[0.06]">
                         <span className="text-[9px] font-black text-blue-400 font-mono uppercase tracking-widest">FROM</span>
                         <span className="text-xs text-white font-mono">dd/mm/yyyy</span>
                         <CalendarDays size={11} className="text-slate-600" />
                       </div>
                       <span className="text-slate-700 font-bold">→</span>
-                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#160404] border border-white/[0.06]">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#141414] border border-white/[0.06]">
                         <span className="text-[9px] font-black text-blue-400 font-mono uppercase tracking-widest">TO</span>
                         <span className="text-xs text-white font-mono">dd/mm/yyyy</span>
                         <CalendarDays size={11} className="text-slate-600" />
                       </div>
-                      <div className="flex items-center gap-1 p-1 rounded-xl bg-[#160404] border border-white/[0.06]">
+                      <div className="flex items-center gap-1 p-1 rounded-xl bg-[#141414] border border-white/[0.06]">
                         {['TW','14d','30d','90d'].map(r => {
                           const active = (inputs.selectedTimeRange || '30d') === r;
                           return (
@@ -1884,7 +1884,7 @@ TECHNICAL NOTES:
                           <RefreshCw size={11} />
                         </button>
                       </div>
-                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#160404] border border-white/[0.06] ml-auto">
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#141414] border border-white/[0.06] ml-auto">
                         <span className="text-[9px] font-black text-slate-500 font-mono uppercase tracking-widest">TYPE</span>
                         <select value={selectedType} onChange={e => setSelectedType(e.target.value)}
                           className="bg-transparent text-xs text-white outline-none cursor-pointer">
@@ -1909,7 +1909,7 @@ TECHNICAL NOTES:
                         { label: 'CONTENT BUNDLES', icon: <Database size={18} />, color: 'amber',
                           value: generations.length },
                       ].map(s => (
-                        <div key={s.label} className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] hover:-translate-y-0.5 transition-all">
+                        <div key={s.label} className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] hover:-translate-y-0.5 transition-all">
                           <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center',
                             s.color === 'blue'    ? 'bg-blue-500/15 text-blue-400' :
                             s.color === 'emerald' ? 'bg-emerald-500/15 text-emerald-400' :
@@ -1925,7 +1925,7 @@ TECHNICAL NOTES:
                     {/* Charts row */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                       {/* Weekly Activity */}
-                      <div className="lg:col-span-6 p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06]">
+                      <div className="lg:col-span-6 p-5 rounded-2xl bg-[#161616] border border-white/[0.06]">
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">WEEKLY ACTIVITY</p>
                         <div className="flex items-end justify-between h-28 gap-2 mt-6 px-1">
                           {['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((day, i) => (
@@ -1941,7 +1941,7 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* Output Mix */}
-                      <div className="lg:col-span-3 p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] flex flex-col items-center">
+                      <div className="lg:col-span-3 p-5 rounded-2xl bg-[#161616] border border-white/[0.06] flex flex-col items-center">
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono w-full text-left">OUTPUT MIX</p>
                         <div className="relative w-24 h-24 my-4">
                           <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
@@ -1971,7 +1971,7 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* Top Tracks */}
-                      <div className="lg:col-span-3 p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06]">
+                      <div className="lg:col-span-3 p-5 rounded-2xl bg-[#161616] border border-white/[0.06]">
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">TOP TRACKS</p>
                         <div className="mt-4 space-y-3">
                           {['DSA','Java','Python','Java Full Stack','Cybersecurity','Data Analytics','Aptitude'].map(track => {
@@ -1992,7 +1992,7 @@ TECHNICAL NOTES:
                     </div>
 
                     {/* Recent Generations table */}
-                    <div className="rounded-2xl bg-[#1a0404] border border-white/[0.06] overflow-hidden">
+                    <div className="rounded-2xl bg-[#161616] border border-white/[0.06] overflow-hidden">
                       <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06]">
                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest font-mono">RECENT GENERATIONS</p>
                         <button onClick={() => showPage('contentbank')} className="text-[10px] font-black text-blue-400 hover:text-blue-300 uppercase tracking-widest cursor-pointer transition-colors">
@@ -2056,7 +2056,7 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* Type tabs */}
-                      <div className="flex gap-1 p-1 rounded-xl bg-[#160404] border border-white/[0.06] w-fit">
+                      <div className="flex gap-1 p-1 rounded-xl bg-[#141414] border border-white/[0.06] w-fit">
                         {[
                           ['questions', 'MCQ QUESTIONS'],
                           ['coding',    'CODING LOGIC'],
@@ -2075,7 +2075,7 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* 00 / CLASSIFY AS */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-4">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-4">
                         <p className="text-[9px] font-black text-slate-500 font-mono uppercase tracking-widest">
                           <span className="text-slate-700 mr-2">00 /</span> CLASSIFY AS
                         </p>
@@ -2089,7 +2089,7 @@ TECHNICAL NOTES:
                             <div key={label} className="space-y-1.5">
                               <label className="text-[9px] font-black text-slate-600 uppercase tracking-widest font-mono">{label}</label>
                               <select value={value} onChange={e => setter(e.target.value)}
-                                className="w-full bg-[#160404] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white outline-none cursor-pointer focus:border-blue-500/40 transition-colors">
+                                className="w-full bg-[#141414] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white outline-none cursor-pointer focus:border-blue-500/40 transition-colors">
                                 <option value="">Select {label.toLowerCase()}...</option>
                                 {options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                               </select>
@@ -2099,7 +2099,7 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* 01 / TOPIC */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-3">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-3">
                         <div className="flex items-center justify-between">
                           <p className="text-[9px] font-black text-slate-500 font-mono uppercase tracking-widest">
                             <span className="text-slate-700 mr-2">01 /</span> TOPIC
@@ -2110,17 +2110,17 @@ TECHNICAL NOTES:
                           value={topic}
                           onChange={e => setTopic(e.target.value.slice(0, 80))}
                           placeholder="e.g. Binary Search Trees, Java Generics, Spring Boot..."
-                          className="w-full bg-[#160404] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-blue-500/40 transition-colors"
+                          className="w-full bg-[#141414] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-blue-500/40 transition-colors"
                         />
                       </div>
 
                       {/* 02 / CONTEXT BRIEF */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-3">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-3">
                         <div className="flex items-center justify-between">
                           <p className="text-[9px] font-black text-slate-500 font-mono uppercase tracking-widest">
                             <span className="text-slate-700 mr-2">02 /</span> CONTENT BRIEF
                           </p>
-                          <div className="flex gap-1 p-0.5 rounded-lg bg-[#160404] border border-white/[0.06]">
+                          <div className="flex gap-1 p-0.5 rounded-lg bg-[#141414] border border-white/[0.06]">
                             {['TEXT','URL'].map((t, ti) => (
                               <button key={t} className={cn('px-3 py-1 rounded-md text-[9px] font-black uppercase tracking-widest cursor-pointer transition-all',
                                 ti === 0 ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-white'
@@ -2133,13 +2133,13 @@ TECHNICAL NOTES:
                           onChange={e => setAdditionalContext(e.target.value)}
                           rows={5}
                           placeholder="Describe focus areas, learning objectives, or any context for the questions..."
-                          className="w-full bg-[#160404] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-blue-500/40 resize-none transition-colors"
+                          className="w-full bg-[#141414] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 outline-none focus:border-blue-500/40 resize-none transition-colors"
                         />
                         <p className="text-[10px] text-slate-600 font-mono text-right">{additionalContext.length} chars</p>
                       </div>
 
                       {/* 03 / QUESTION SETTINGS */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-4">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-4">
                         <p className="text-[9px] font-black text-slate-500 font-mono uppercase tracking-widest">
                           <span className="text-slate-700 mr-2">03 /</span> QUESTION SETTINGS
                         </p>
@@ -2154,7 +2154,7 @@ TECHNICAL NOTES:
                               max={20}
                               value={count}
                               onChange={e => setCount(Math.max(1, Math.min(20, parseInt(e.target.value) || 5)))}
-                              className="w-20 bg-[#160404] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white text-center outline-none focus:border-blue-500/40 transition-colors font-mono"
+                              className="w-20 bg-[#141414] border border-white/[0.08] rounded-xl px-3 py-2.5 text-sm text-white text-center outline-none focus:border-blue-500/40 transition-colors font-mono"
                             />
                             <div className="flex items-center gap-1.5">
                               {[5, 10, 15, 20].map(n => (
@@ -2162,7 +2162,7 @@ TECHNICAL NOTES:
                                   className={cn('w-9 h-9 rounded-lg text-xs font-black cursor-pointer transition-all',
                                     count === n
                                       ? 'bg-blue-600 text-white'
-                                      : 'bg-[#160404] border border-white/[0.06] text-slate-500 hover:text-white hover:bg-white/5'
+                                      : 'bg-[#141414] border border-white/[0.06] text-slate-500 hover:text-white hover:bg-white/5'
                                   )}>
                                   {n}
                                 </button>
@@ -2181,7 +2181,7 @@ TECHNICAL NOTES:
                                 className={cn('flex-1 py-3 px-4 rounded-xl text-left cursor-pointer transition-all border',
                                   sourceType === 'non-leetcode'
                                     ? 'bg-blue-600/15 border-blue-500/30 text-blue-300'
-                                    : 'bg-[#160404] border-white/[0.06] text-slate-400 hover:text-white hover:border-white/20'
+                                    : 'bg-[#141414] border-white/[0.06] text-slate-400 hover:text-white hover:border-white/20'
                                 )}>
                                 <p className="text-[10px] font-black uppercase tracking-wider">Custom Problems</p>
                                 <p className="text-[9px] opacity-60 mt-0.5 font-mono">Original scenarios</p>
@@ -2191,7 +2191,7 @@ TECHNICAL NOTES:
                                 className={cn('flex-1 py-3 px-4 rounded-xl text-left cursor-pointer transition-all border',
                                   sourceType === 'leetcode'
                                     ? 'bg-orange-500/15 border-orange-500/30 text-orange-300'
-                                    : 'bg-[#160404] border-white/[0.06] text-slate-400 hover:text-white hover:border-white/20'
+                                    : 'bg-[#141414] border-white/[0.06] text-slate-400 hover:text-white hover:border-white/20'
                                 )}>
                                 <p className="text-[10px] font-black uppercase tracking-wider">LeetCode Style</p>
                                 <p className="text-[9px] opacity-60 mt-0.5 font-mono">Numbered problems</p>
@@ -2206,7 +2206,7 @@ TECHNICAL NOTES:
                     {/* Right: Config panel */}
                     <div className="w-72 shrink-0 flex flex-col gap-4 overflow-y-auto">
                       {/* Tone Matrix */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-3">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-3">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono flex items-center gap-2">
                           <BrainCircuit size={13} className="text-slate-500" /> TONE MATRIX
                         </p>
@@ -2214,14 +2214,14 @@ TECHNICAL NOTES:
                           {['Professional','Academic','Casual','Technical','Executive','Creative'].map(t => (
                             <button key={t} onClick={() => setActiveTone(t)}
                               className={cn('px-3 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all',
-                                activeTone === t ? 'bg-blue-600 text-white' : 'bg-[#160404] text-slate-400 hover:text-white hover:bg-white/5'
+                                activeTone === t ? 'bg-blue-600 text-white' : 'bg-[#141414] text-slate-400 hover:text-white hover:bg-white/5'
                               )}>{t}</button>
                           ))}
                         </div>
                       </div>
 
                       {/* Neural Engine */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-3">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-3">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono flex items-center gap-2">
                           <Cpu size={13} className="text-slate-500" /> NEURAL ENGINE
                         </p>
@@ -2236,7 +2236,7 @@ TECHNICAL NOTES:
                               className={cn('w-full flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all text-left',
                                 engine === e.id
                                   ? 'bg-blue-600/15 border border-blue-500/30'
-                                  : 'bg-[#160404] border border-white/[0.05] hover:border-white/10'
+                                  : 'bg-[#141414] border border-white/[0.05] hover:border-white/10'
                               )}>
                               <span className="text-base leading-none">{e.icon}</span>
                               <div className="flex-1 min-w-0">
@@ -2254,13 +2254,13 @@ TECHNICAL NOTES:
                       </div>
 
                       {/* Difficulty */}
-                      <div className="p-5 rounded-2xl bg-[#1a0404] border border-white/[0.06] space-y-3">
+                      <div className="p-5 rounded-2xl bg-[#161616] border border-white/[0.06] space-y-3">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest font-mono">DIFFICULTY</p>
                         <div className="flex gap-2">
                           {['Easy','Medium','Hard'].map(d => (
                             <button key={d} onClick={() => setDifficulty(d)}
                               className={cn('flex-1 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all',
-                                difficulty === d ? 'bg-blue-600 text-white' : 'bg-[#160404] text-slate-400 hover:text-white hover:bg-white/5'
+                                difficulty === d ? 'bg-blue-600 text-white' : 'bg-[#141414] text-slate-400 hover:text-white hover:bg-white/5'
                               )}>{d}</button>
                           ))}
                         </div>
@@ -2300,7 +2300,7 @@ TECHNICAL NOTES:
                     {/* Header Controls */}
                     <div className="flex items-center justify-between text-slate-800 dark:text-white">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 bg-slate-100 dark:bg-[#1c0505] border border-slate-200 dark:border-white/10 rounded-lg flex items-center justify-center text-slate-500 dark:text-gray-400">
+                        <div className="w-7 h-7 bg-slate-100 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-lg flex items-center justify-center text-slate-500 dark:text-gray-400">
                           <Settings size={13} />
                         </div>
                         <h2 className="text-lg font-bold tracking-tight">System Settings</h2>
@@ -2309,7 +2309,7 @@ TECHNICAL NOTES:
                     </div>
 
                     {/* Sub settings tabs */}
-                    <div className="flex bg-slate-100 dark:bg-[#1c0505] border border-slate-200 dark:border-white/10 rounded-lg p-0.5 select-none overflow-x-auto no-scrollbar">
+                    <div className="flex bg-slate-100 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-lg p-0.5 select-none overflow-x-auto no-scrollbar">
                       {[
                         { id: 'profile', label: 'PROFILE' },
                         { id: 'generation', label: 'GENERATION' },
@@ -2333,7 +2333,7 @@ TECHNICAL NOTES:
 
                     {/* PROFILE SETTINGS TAB — TVA Identity (read-only, synced from timesheet) */}
                     {activeSettingsTab === 'profile' && (
-                      <div className="bg-card border border-slate-200/80 dark:border-[#2a0808]/50 rounded-xl p-5 space-y-5 shadow-sm text-slate-800 dark:text-white">
+                      <div className="bg-card border border-slate-200/80 dark:border-white/[0.07]/50 rounded-xl p-5 space-y-5 shadow-sm text-slate-800 dark:text-white">
                         {/* Header */}
                         <div className="flex items-center justify-between">
                           <h3 className="text-xs font-black uppercase text-slate-500 dark:text-gray-400 tracking-wider flex items-center gap-2">
@@ -2379,7 +2379,7 @@ TECHNICAL NOTES:
                           ].map(({ label, value }) => (
                             <div key={label} className="space-y-1">
                               <div className="text-[9px] font-extrabold text-slate-500 dark:text-[#6b7280] uppercase tracking-wider">{label}</div>
-                              <div className="w-full bg-slate-50 dark:bg-[#200606] border border-slate-200 dark:border-white/[0.06] rounded-lg px-3 py-2.5 text-xs text-slate-800 dark:text-slate-300 font-mono select-all">
+                              <div className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-white/[0.06] rounded-lg px-3 py-2.5 text-xs text-slate-800 dark:text-slate-300 font-mono select-all">
                                 {value}
                               </div>
                             </div>
@@ -2394,7 +2394,7 @@ TECHNICAL NOTES:
 
                     {/* GENERATION SETTINGS CONTEXT */}
                     {activeSettingsTab === 'generation' && (
-                      <div className="bg-card border border-slate-200/80 dark:border-[#2a0808]/50 rounded-xl p-5 space-y-4 shadow-sm text-slate-800 dark:text-white">
+                      <div className="bg-card border border-slate-200/80 dark:border-white/[0.07]/50 rounded-xl p-5 space-y-4 shadow-sm text-slate-800 dark:text-white">
                         <h3 className="text-xs font-black uppercase text-slate-500 dark:text-gray-400 tracking-wider flex items-center gap-2">
                           <Sliders size={13} /> Synthesizer Setup Defaults
                         </h3>
@@ -2405,12 +2405,12 @@ TECHNICAL NOTES:
                             <input 
                               type="number" 
                               defaultValue={10} 
-                              className="w-full bg-slate-50 dark:bg-[#200606] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none"
+                              className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none"
                             />
                           </div>
                           <div className="space-y-1">
                             <label className="text-[9px] font-extrabold text-[#6b7280] uppercase tracking-wider">DEFAULT DIFFICULTY</label>
-                            <select className="w-full bg-slate-50 dark:bg-[#200606] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none cursor-pointer">
+                            <select className="w-full bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none cursor-pointer">
                               <option>Easy</option>
                               <option selected>Medium</option>
                               <option>Hard</option>
@@ -2425,7 +2425,7 @@ TECHNICAL NOTES:
 
                     {/* NOTIFICATIONS SETTINGS */}
                     {activeSettingsTab === 'notif' && (
-                      <div className="bg-card border border-slate-200/80 dark:border-[#2a0808]/50 rounded-xl p-5 space-y-4 shadow-sm text-slate-800 dark:text-white">
+                      <div className="bg-card border border-slate-200/80 dark:border-white/[0.07]/50 rounded-xl p-5 space-y-4 shadow-sm text-slate-800 dark:text-white">
                         <h3 className="text-xs font-black uppercase text-slate-500 dark:text-gray-400 tracking-wider flex items-center gap-2">
                           <Sliders size={13} /> Notification Profiles
                         </h3>
@@ -2437,7 +2437,7 @@ TECHNICAL NOTES:
                     {activeSettingsTab === 'api' && (
                         <div className="glass-card rounded-3xl border border-white/5 p-6 space-y-5 relative overflow-hidden">
                           {/* Coming Soon overlay */}
-                          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center backdrop-blur-sm bg-[#110101]/70 rounded-3xl gap-4">
+                          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center backdrop-blur-sm bg-[#0d0d0d]/70 rounded-3xl gap-4">
                             <div className="w-16 h-16 rounded-3xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
                               <Lock size={28} className="text-yellow-400" />
                             </div>
@@ -2785,7 +2785,7 @@ TECHNICAL NOTES:
                     </div>
 
                     {/* Responsive Header Row exactly matching user screenshots */}
-                    <div id="contentBankHeaderRow" className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 select-none shrink-0 bg-white/50 dark:bg-[#1a0404]/30 p-4 border border-slate-200 dark:border-white/5 rounded-2xl shadow-sm">
+                    <div id="contentBankHeaderRow" className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 select-none shrink-0 bg-white/50 dark:bg-[#161616]/30 p-4 border border-slate-200 dark:border-white/5 rounded-2xl shadow-sm">
                       <div className="flex items-center gap-4">
                         {!contentBankCategory ? (
                           <div id="techTrackIcon" className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-sm">
@@ -2823,7 +2823,7 @@ TECHNICAL NOTES:
                       {/* Header Controls (View Toggles, Search, Action Button) */}
                       <div id="contentBankHeaderTools" className="flex flex-wrap items-center gap-3">
                         {/* Switcher style exactly like screenshot */}
-                        <div id="toggleViewContainer" className="flex items-center bg-slate-100 dark:bg-[#2a0808]/50 border border-slate-200 dark:border-white/5 rounded-lg p-0.5 shadow-inner">
+                        <div id="toggleViewContainer" className="flex items-center bg-slate-100 dark:bg-[#222222]/50 border border-slate-200 dark:border-white/5 rounded-lg p-0.5 shadow-inner">
                           <button 
                             id="btnGridMode"
                             onClick={() => setBankViewMode('grid')}
@@ -2861,7 +2861,7 @@ TECHNICAL NOTES:
                               value={contentBankSearchQuery}
                               onChange={(e) => setContentBankSearchQuery(e.target.value)}
                               placeholder={!contentBankCategory ? "Search categories..." : !contentBankTrack ? "Search tracks..." : "Search courses..."}
-                              className="w-48 pl-8 pr-3 py-1.5 bg-slate-50 dark:bg-[#140303] border border-slate-200 dark:border-white/10 rounded-lg text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 transition-all font-sans font-medium"
+                              className="w-48 pl-8 pr-3 py-1.5 bg-slate-50 dark:bg-[#111111] border border-slate-200 dark:border-white/10 rounded-lg text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 transition-all font-sans font-medium"
                             />
                             <Search size={12} className="absolute left-2.5 top-2.5 text-slate-400" />
                           </div>
@@ -2913,7 +2913,7 @@ TECHNICAL NOTES:
                                         setContentBankCourse(null);
                                         setContentBankSearchQuery('');
                                       }}
-                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
+                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
                                     >
                                       <div className="text-indigo-600 dark:text-blue-400 mb-4 bg-indigo-50 dark:bg-blue-950/20 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
                                         <FolderOpen size={18} className="stroke-[1.8]" />
@@ -2931,7 +2931,7 @@ TECHNICAL NOTES:
                                 })}
                             </div>
                           ) : (
-                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
+                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
                               {Object.keys(trackGroups)
                                 .filter(categoryName => categoryName.toLowerCase().includes(contentBankSearchQuery.toLowerCase()))
                                 .map(categoryName => {
@@ -2980,7 +2980,7 @@ TECHNICAL NOTES:
                                         setContentBankTrack(trackName);
                                         setContentBankSearchQuery('');
                                       }}
-                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
+                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
                                     >
                                       <div className="text-indigo-600 dark:text-blue-400 mb-4 bg-indigo-50 dark:bg-blue-950/20 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
                                         <FolderOpen size={18} className="stroke-[1.8]" />
@@ -2998,7 +2998,7 @@ TECHNICAL NOTES:
                                 })}
                             </div>
                           ) : (
-                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
+                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
                               {(trackGroups[contentBankCategory] || [])
                                 .filter(trackName => trackName.toLowerCase().includes(contentBankSearchQuery.toLowerCase()))
                                 .map(trackName => {
@@ -3061,7 +3061,7 @@ TECHNICAL NOTES:
                                       onClick={() => {
                                         setContentBankCourse(courseName);
                                       }}
-                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
+                                      className="group cursor-pointer select-none rounded-[20px] border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] hover:bg-slate-100/50 dark:hover:bg-slate-800/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md transition-all duration-200"
                                     >
                                       <div className="text-indigo-600 dark:text-blue-400 mb-4 bg-indigo-50 dark:bg-blue-950/20 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
                                         <BookOpen size={18} className="stroke-[1.8]" />
@@ -3079,7 +3079,7 @@ TECHNICAL NOTES:
                                 })}
                             </div>
                           ) : (
-                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1c0505] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
+                            <div className="border border-slate-200 dark:border-white/5 bg-white/40 dark:bg-[#1a1a1a] rounded-2xl divide-y divide-slate-100 dark:divide-white/5 overflow-hidden">
                               {(tracksWithCourses[contentBankTrack] || [])
                                 .filter(c => c.toLowerCase().includes(contentBankSearchQuery.toLowerCase()))
                                 .map(courseName => {
@@ -3128,7 +3128,7 @@ TECHNICAL NOTES:
                                   <div
                                     key={p._id}
                                     onClick={() => openBankPlanner(p)}
-                                    className="group cursor-pointer select-none rounded-[20px] border border-brand-primary/20 bg-brand-primary/5 dark:bg-[#1c0505] hover:bg-brand-primary/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md hover:shadow-brand-primary/10 transition-all duration-200"
+                                    className="group cursor-pointer select-none rounded-[20px] border border-brand-primary/20 bg-brand-primary/5 dark:bg-[#1a1a1a] hover:bg-brand-primary/10 p-5 flex flex-col justify-between aspect-[1.58] hover:shadow-md hover:shadow-brand-primary/10 transition-all duration-200"
                                   >
                                     <div className="text-brand-primary bg-brand-primary/10 border border-brand-primary/20 w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
                                       <CalendarDays size={18} />
@@ -3151,11 +3151,11 @@ TECHNICAL NOTES:
 
                       {/* 3. QUESTIONS FOR COURSE VIEW */}
                       {contentBankTrack && contentBankCourse && (
-                        <div id="courseQuestionsView" className="flex flex-col h-full bg-white dark:bg-[#1c0505]/60 border border-slate-200 dark:border-white/10 rounded-[20px] p-5 animate-fadeIn">
+                        <div id="courseQuestionsView" className="flex flex-col h-full bg-white dark:bg-[#1a1a1a]/60 border border-slate-200 dark:border-white/10 rounded-[20px] p-5 animate-fadeIn">
                           
                           {/* Inner Filter bar */}
                           <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 dark:border-white/5 pb-3 mb-4 select-none text-[10px]">
-                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-[#140303] border border-slate-200 dark:border-white/10 rounded-lg p-1.5 px-3 min-w-[200px]">
+                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-[#111111] border border-slate-200 dark:border-white/10 rounded-lg p-1.5 px-3 min-w-[200px]">
                               <Search size={12} className="text-slate-400" />
                               <input 
                                 id="inpCourseQSearch"
@@ -3171,7 +3171,7 @@ TECHNICAL NOTES:
                               id="selCourseQType"
                               value={bankTypeFilter}
                               onChange={(e) => setBankTypeFilter(e.target.value)}
-                              className="bg-slate-50 dark:bg-[#120202] border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-slate-650 dark:text-gray-400 font-bold outline-none cursor-pointer"
+                              className="bg-slate-50 dark:bg-[#111111] border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-slate-650 dark:text-gray-400 font-bold outline-none cursor-pointer"
                             >
                               <option value="">All Types</option>
                               <option value="coding">Coding</option>
@@ -3182,7 +3182,7 @@ TECHNICAL NOTES:
                               id="selCourseQDiff"
                               value={bankDiffFilter}
                               onChange={(e) => setBankDiffFilter(e.target.value)}
-                              className="bg-slate-50 dark:bg-[#120202] border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-slate-650 dark:text-gray-400 font-bold outline-none cursor-pointer"
+                              className="bg-slate-50 dark:bg-[#111111] border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-slate-650 dark:text-gray-400 font-bold outline-none cursor-pointer"
                             >
                               <option value="">All Difficulties</option>
                               <option value="Easy">Easy</option>
@@ -3200,7 +3200,7 @@ TECHNICAL NOTES:
                                 "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-[11px] font-bold cursor-pointer transition-all leading-none",
                                 isSplitView 
                                   ? "bg-indigo-600/15 border-indigo-500/30 text-indigo-600 dark:text-[#ff7c73]"
-                                  : "bg-slate-50 dark:bg-[#120202] border-slate-200 dark:border-white/10 text-slate-650 dark:text-gray-450 hover:bg-slate-100 dark:hover:bg-white/5"
+                                  : "bg-slate-50 dark:bg-[#111111] border-slate-200 dark:border-white/10 text-slate-650 dark:text-gray-450 hover:bg-slate-100 dark:hover:bg-white/5"
                               )}
                             >
                               <Columns size={12} />
@@ -3281,7 +3281,7 @@ TECHNICAL NOTES:
                               title={contentBankFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
                               onClick={() => setContentBankFullscreen(prev => !prev)}
                               className={cn(
-                                "p-2 rounded-lg border bg-slate-50 dark:bg-[#120202] border-slate-200 dark:border-white/10 text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all",
+                                "p-2 rounded-lg border bg-slate-50 dark:bg-[#111111] border-slate-200 dark:border-white/10 text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all",
                                 contentBankFullscreen ? "ring-2 ring-indigo-500" : ""
                               )}
                             >
@@ -3337,7 +3337,7 @@ TECHNICAL NOTES:
                                                 "p-3 rounded-2xl border transition-all cursor-pointer relative overflow-hidden flex flex-col gap-2 group/splititem select-none",
                                                 isSelected 
                                                   ? "bg-indigo-600/10 dark:bg-blue-600/10 border-indigo-500/50 dark:border-blue-500/50 shadow-md ring-1 ring-indigo-500/10 dark:ring-blue-500/10" 
-                                                  : "bg-white dark:bg-[#190404] border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/5"
+                                                  : "bg-white dark:bg-[#171717] border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-white/5"
                                               )}
                                             >
                                               {/* Vertical accent indicator row */}
@@ -3478,7 +3478,7 @@ TECHNICAL NOTES:
               )}
 
               {/* Sticky bottom status footer bar identical to user spec */}
-              <div id="appStickyFooter" className="h-[26px] border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#140303] px-3.5 flex items-center justify-between text-[10px] text-slate-500 dark:text-gray-500 select-none flex-shrink-0">
+              <div id="appStickyFooter" className="h-[26px] border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#111111] px-3.5 flex items-center justify-between text-[10px] text-slate-500 dark:text-gray-500 select-none flex-shrink-0">
                 <div className="flex gap-4 items-center">
                   <div className="flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />
@@ -3514,7 +3514,7 @@ TECHNICAL NOTES:
               initial={{ scale: 0.95, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 15 }}
-              className="w-full max-w-sm bg-white dark:bg-[#1e0505] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden p-5"
+              className="w-full max-w-sm bg-white dark:bg-[#1c1c1c] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden p-5"
             >
               <h3 className="text-[10px] font-black tracking-widest text-indigo-600 dark:text-[#ff7c73] uppercase mb-1 font-mono">
                 {bankModalType === 'course' ? 'Create Course' : bankModalType === 'track' ? 'Create Track' : 'Create Category'}
@@ -3590,7 +3590,7 @@ TECHNICAL NOTES:
 
       {/* MCP generation overlay — shown when Claude triggers a generation via MCP */}
       {mcpOverlay && mcpJob && (
-        <div className="fixed inset-0 z-[9000] bg-[#110101] flex flex-col items-center justify-center gap-5 animate-in fade-in duration-300"
+        <div className="fixed inset-0 z-[9000] bg-[#0d0d0d] flex flex-col items-center justify-center gap-5 animate-in fade-in duration-300"
           style={{ backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.07) 0%, transparent 55%)' }}>
 
           {/* QLoader bolt animation (reusing CSS classes from QLoader component) */}
@@ -3718,9 +3718,9 @@ TECHNICAL NOTES:
 
       {/* Neon Clash Arcade modal — full-screen iframe */}
       {arcadeOpen && (
-        <div className="fixed inset-0 z-[9999] flex flex-col bg-[#0e0101]">
+        <div className="fixed inset-0 z-[9999] flex flex-col bg-[#0b0b0b]">
           {/* Thin header bar */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.08] bg-[#160404]/80 backdrop-blur-sm shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.08] bg-[#141414]/80 backdrop-blur-sm shrink-0">
             <div className="flex items-center gap-3">
               <span className="text-lg">🕹️</span>
               <div>
@@ -3749,7 +3749,7 @@ TECHNICAL NOTES:
       {mcpPromptModal && (
         <div className="fixed inset-0 z-[9500] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setMcpPromptModal(false)}>
-          <div className="w-full max-w-2xl rounded-3xl bg-[#1a0404] border border-white/[0.08] overflow-hidden shadow-2xl"
+          <div className="w-full max-w-2xl rounded-3xl bg-[#161616] border border-white/[0.08] overflow-hidden shadow-2xl"
             onClick={e => e.stopPropagation()}>
             {/* Modal header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
@@ -3772,7 +3772,7 @@ TECHNICAL NOTES:
 
             {/* Prompt box */}
             <div className="px-6 py-4">
-              <div className="relative rounded-2xl bg-[#0e0101] border border-white/[0.06] overflow-hidden">
+              <div className="relative rounded-2xl bg-[#0b0b0b] border border-white/[0.06] overflow-hidden">
                 <pre className="text-[11px] text-slate-300 font-mono p-4 overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">{mcpPromptText}</pre>
               </div>
               <p className="text-[9px] text-slate-600 font-mono mt-2">

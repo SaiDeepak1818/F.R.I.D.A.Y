@@ -17,7 +17,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-surface: var(--surface);
 
-  /* ── Remap indigo → F.R.I.D.A.Y Red  (#e60a0a anchor) ── */
+  /* ── Remap indigo → F.R.I.D.A.Y Peach-Red (#e60a0a anchor) ── */
   --color-indigo-50:  #fff5f5;
   --color-indigo-100: #ffe0e0;
   --color-indigo-200: #ffbdbd;
@@ -30,7 +30,7 @@
   --color-indigo-900: #7a0404;
   --color-indigo-950: #450101;
 
-  /* ── Remap blue → same Red spectrum (keeps sidebar/buttons/charts all red) ── */
+  /* ── Remap blue → same Peach-Red (no purple/violet dominance) ── */
   --color-blue-50:  #fff5f5;
   --color-blue-100: #ffe0e0;
   --color-blue-200: #ffbdbd;
@@ -55,26 +55,28 @@
 }
 
 @layer base {
+  /* ── Light mode: pure white cards, clean bg ── */
   :root {
-    --background:       #fff8f8;
-    --foreground:       #1c0303;
+    --background:       #f2f2f2;
+    --foreground:       #111111;
     --card:             #ffffff;
-    --card-foreground:  #1c0303;
-    --border:           rgba(230,10,10,0.10);
-    --muted:            #fff0f0;
-    --muted-foreground: #78716c;
+    --card-foreground:  #111111;
+    --border:           rgba(0,0,0,0.07);
+    --muted:            #f0f0f0;
+    --muted-foreground: #6b7280;
     --surface:          #ffffff;
   }
 
+  /* ── Dark mode: pitch black, red only as accent ── */
   .dark {
     --background:       transparent;
-    --foreground:       #fff5f5;
-    --card:             rgba(20,4,4,0.75);
-    --card-foreground:  #fff5f5;
-    --border:           rgba(230,10,10,0.14);
-    --muted:            rgba(40,8,8,0.80);
-    --muted-foreground: #c4a4a4;
-    --surface:          rgba(30,6,6,0.80);
+    --foreground:       #f5f5f5;
+    --card:             rgba(20,20,20,0.82);
+    --card-foreground:  #f5f5f5;
+    --border:           rgba(255,255,255,0.07);
+    --muted:            rgba(28,28,28,0.90);
+    --muted-foreground: #9ca3af;
+    --surface:          rgba(16,16,16,0.90);
   }
 }
 
@@ -82,48 +84,47 @@
   .glass-panel {
     @apply border transition-all duration-200;
     background: var(--card);
-    border-color: rgba(230,10,10,0.12);
+    border-color: rgba(255,255,255,0.07);
   }
 
   .glass-card {
     @apply border transition-all duration-200;
     background: var(--card);
-    border-color: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.07);
     box-shadow: none;
   }
   .dark .glass-card {
     background: var(--card);
-    border-color: rgba(255,255,255,0.06);
-    box-shadow: none;
+    border-color: rgba(255,255,255,0.07);
   }
-  .glass-card:hover      { border-color: rgba(230,10,10,0.22); }
-  .dark .glass-card:hover{ border-color: rgba(255,255,255,0.10); }
+  /* Light mode card hover: subtle peach-red shadow */
+  .glass-card:hover {
+    border-color: rgba(230,10,10,0.18);
+    box-shadow: 0 4px 24px rgba(230,10,10,0.06);
+  }
+  .dark .glass-card:hover {
+    border-color: rgba(230,10,10,0.25);
+    box-shadow: 0 4px 24px rgba(230,10,10,0.08);
+  }
 
   .glow-text-primary {
-    text-shadow: 0 0 30px rgba(230,10,10,0.65);
+    text-shadow: 0 0 30px rgba(230,10,10,0.55);
   }
 
   .inner-glow {
-    box-shadow: inset 0 0 20px rgba(230,10,10,0.06);
+    box-shadow: inset 0 0 20px rgba(230,10,10,0.05);
   }
 
-  /* Dark mode: premium red — strong corner glows, brand-matched */
+  /* Dark: Vanta handles bg — no competing gradient needed */
   .mesh-gradient-dark {
-    background-color: #120202;
-    background-image:
-      radial-gradient(at 0%   0%,   rgba(230,10,10,0.40) 0px, transparent 50%),
-      radial-gradient(at 100% 0%,   rgba(192,8,8,0.28)   0px, transparent 50%),
-      radial-gradient(at 50%  40%,  rgba(255,60,60,0.06) 0px, transparent 55%),
-      radial-gradient(at 100% 100%, rgba(255,124,115,0.18) 0px, transparent 50%),
-      radial-gradient(at 0%   100%, rgba(94,23,235,0.06)  0px, transparent 45%);
+    background-color: transparent;
   }
 
-  /* Light mode: warm rose-white with soft red tint */
+  /* Light: clean white, very faint peach shadow top-left */
   .mesh-gradient-light {
-    background-color: #fff8f8;
+    background-color: #f2f2f2;
     background-image:
-      radial-gradient(at 0%   0%, rgba(230,10,10,0.07)   0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(255,124,115,0.05)  0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(230,10,10,0.04) 0px, transparent 50%);
   }
 
   .bg-noise {
@@ -137,9 +138,9 @@
     background: linear-gradient(45deg, #e60a0a, #5e17eb);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
-    z-index: 0; opacity: 0.22; border-radius: inherit; transition: opacity 0.3s ease;
+    z-index: 0; opacity: 0.18; border-radius: inherit; transition: opacity 0.3s ease;
   }
-  .neon-border:hover::after { opacity: 0.65; }
+  .neon-border:hover::after { opacity: 0.55; }
 }
 
 body {
@@ -155,19 +156,19 @@ h1, h2, h3, h4, h5, h6 { @apply font-display; }
 }
 
 .hero-gradient {
-  background: radial-gradient(circle at center, rgba(230,10,10,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(230,10,10,0.08) 0%, transparent 70%);
 }
 
-/* ── F.R.I.D.A.Y loader — neon red ── */
+/* ── F.R.I.D.A.Y loader ── */
 .ql-loader {
   --loop:       2.6s;
   --neon:       #e60a0a;
   --neon-soft:  #ff7c73;
   --neon-core:  #fff5f5;
   --draw-stroke:#fff5f5;
-  --grid-c:     rgba(230,10,10,0.07);
+  --grid-c:     rgba(230,10,10,0.06);
   --grid-op:    1;
-  --stage-bg:   radial-gradient(120% 120% at 50% 50%, #1c0404 0%, #0a0101 70%);
+  --stage-bg:   radial-gradient(120% 120% at 50% 50%, #1a0404 0%, #070707 70%);
   position: fixed; inset: 0; z-index: 9999; overflow: hidden;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.6rem;
   background: var(--stage-bg);
@@ -204,11 +205,10 @@ h1, h2, h3, h4, h5, h6 { @apply font-display; }
   animation: qlPulse var(--loop) cubic-bezier(0.22,0.61,0.36,1) infinite;
 }
 .ql-pulse.p2 { animation-delay: calc(var(--loop) * 0.07); }
-
 .ql-loader-label {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 0.22em;
-  text-transform: uppercase; color: #a87070; position: relative;
+  text-transform: uppercase; color: #888; position: relative;
 }
 
 @keyframes qlDraw {
@@ -226,7 +226,6 @@ h1, h2, h3, h4, h5, h6 { @apply font-display; }
 }
 @keyframes qlFill  { 0%,42%{opacity:0} 58%{opacity:0.24} 86%{opacity:0.24} 100%{opacity:0} }
 @keyframes qlPulse { 0%,44%{transform:scale(1);opacity:0} 52%{opacity:0.7} 100%{transform:scale(2.05);opacity:0} }
-
 @media (prefers-reduced-motion: reduce) {
   .ql-draw, .ql-fill, .ql-pulse { animation: none; }
   .ql-draw { stroke-dashoffset: 0; opacity: 1; }

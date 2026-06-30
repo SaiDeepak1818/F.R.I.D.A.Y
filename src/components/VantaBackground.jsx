@@ -21,11 +21,13 @@ export default function VantaBackground({ theme = 'dark' }) {
       minWidth: 200,
       scale: 1.0,
       scaleMobile: 1.0,
-      color: isDark ? 0xe60a0a : 0xe60a0a,
-      color2: isDark ? 0xff7c73 : 0xff9090,
-      backgroundColor: isDark ? 0x120202 : 0xfff8f8,
-      size: 2.8,
-      spacing: 32,
+      /* Dark: pitch black bg, peach-red dots */
+      /* Light: off-white bg, muted peach-red dots */
+      color:           isDark ? 0xe60a0a : 0xe60a0a,
+      color2:          isDark ? 0xff7c73 : 0xffb3ae,
+      backgroundColor: isDark ? 0x080808 : 0xf2f2f2,
+      size:    2.5,
+      spacing: 34,
       showLines: false,
     });
 
