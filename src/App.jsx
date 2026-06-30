@@ -1708,7 +1708,7 @@ TECHNICAL NOTES:
                 )}
                 title="Generate"
               >
-                <Zap size={16} className={cn(currentPage === 'generate' && "fill-white/20")} />
+                <Sparkles size={16} />
               </button>
 
               {/* 3 · Tracks — Content Bank */}

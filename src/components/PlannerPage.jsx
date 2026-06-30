@@ -704,11 +704,6 @@ export function PlannerPage({ apiFetch, showToast, getActiveFormat, tracksWithCo
             <p className="font-black text-foreground/30">No planners yet</p>
             <p className="text-[10px] text-foreground/20 font-mono mt-1">Upload an Excel planner to generate structured week-by-week question sets for any track</p>
           </div>
-          <button onClick={() => setMode('create')}
-            className="inline-flex items-center gap-2 bg-brand-primary/10 hover:bg-brand-primary/20 text-brand-primary border border-brand-primary/20 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer"
-          >
-            <Plus size={14} /> Create Your First Planner
-          </button>
         </div>
       ) : (
         <div className="space-y-4">
