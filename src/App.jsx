@@ -75,7 +75,6 @@ import { PlannerPage } from './components/PlannerPage';
 import { PlannerView } from './components/PlannerView';
 import { ContentWeb } from './components/ContentWeb';
 import { CursorTrail } from './components/CursorTrail';
-import VantaBackground from './components/VantaBackground';
 
 
 
@@ -1552,8 +1551,7 @@ TECHNICAL NOTES:
   const displayedPage = isLoggedIn ? currentPage : 'login';
 
   return (
-    <div className="w-screen h-screen overflow-hidden text-foreground flex flex-col font-sans select-none relative">
-      <VantaBackground theme={theme} />
+    <div className="w-screen h-screen overflow-hidden text-foreground bg-background flex flex-col font-sans select-none relative">
       <CursorTrail />
       
       {/* Dynamic Toast Alerts Renderer */}
