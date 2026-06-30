@@ -742,7 +742,7 @@ TECHNICAL NOTES:
     if (!courseName?.trim()) { showToast('Enter a course name first!', true); return; }
     if (!track) { showToast('Select a track first!', true); return; }
     const lines = [
-      `I need to generate a QuestAI Content Planner. Please:`,
+      `I need to generate a F.R.I.D.A.Y Content Planner. Please:`,
       ``,
       `1. Read my attached Excel planner file to extract:`,
       `   - Week number from the "Week" column`,
@@ -1388,7 +1388,7 @@ TECHNICAL NOTES:
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `QuestAI_Coding_${activeGeneration.topic.replace(/\s+/g, '_')}.json`;
+      a.download = `FRIDAY_Coding_${activeGeneration.topic.replace(/\s+/g, '_')}.json`;
       a.click();
       showToast('Saved JSON descriptor dataset!');
     }
@@ -1582,7 +1582,7 @@ TECHNICAL NOTES:
                   <Zap size={14} className="text-white fill-white/20 animate-pulse" />
                 </div>
                 <div>
-                  <div className="text-xs font-black tracking-widest text-white uppercase font-display">QUESTIONS GENERATOR</div>
+                  <div className="text-xs font-black tracking-widest text-white uppercase font-display">F.R.I.D.A.Y</div>
                   <div className="text-[9px] text-[#64748b] font-mono tracking-wider font-bold">Q LABS</div>
                 </div>
               </div>
@@ -1611,7 +1611,7 @@ TECHNICAL NOTES:
                   <span className="w-5 h-[1.5px] bg-blue-500/30 inline-block" />
                   SESSION_INIT
                 </div>
-                <h2 className="text-2xl font-black tracking-tight text-white mb-1.5">QuestAi Application</h2>
+                <h2 className="text-2xl font-black tracking-tight text-white mb-1.5">F.R.I.D.A.Y</h2>
                 <div className="text-xs text-emerald-400 font-mono mb-6">{`>_ AWAITING_CREDENTIALS`}</div>
 
                 {/* Role Tabs layout removed to keep login focused on employee access only */}
@@ -3486,7 +3486,7 @@ TECHNICAL NOTES:
                   </div>
                 </div>
                 <div className="font-mono">
-                  {currentTime} IST · v3.0.0 · QuestAI
+                  {currentTime} IST · v3.0.0 · F.R.I.D.A.Y
                 </div>
               </div>
 
