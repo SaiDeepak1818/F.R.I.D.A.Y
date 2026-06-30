@@ -111,8 +111,9 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [theme, setTheme] = useState('dark');
-  const [userRole, setUserRole] = useState('admin'); // 'employee' or 'admin'
-  const [loginIdInput, setLoginIdInput] = useState('neo10506');
+  const [userRole, setUserRole] = useState('employee');
+  const [tvaProfile, setTvaProfile] = useState(null); // full iamneo timesheet profile
+  const [loginIdInput, setLoginIdInput] = useState('');
   const [loginPasswordInput, setLoginPasswordInput] = useState('');
   
   // App Logic States
@@ -467,6 +468,8 @@ TECHNICAL NOTES:
           profileName:  user.displayName || user.username,
           profileEmpId: user.username
         }));
+        if (user.tvaProfile) setTvaProfile(user.tvaProfile);
+        if (user.role) setUserRole(user.role);
         setIsLoggedIn(true);
       } catch (err) {
         console.warn('Failed to recover session');
@@ -1299,17 +1302,9 @@ TECHNICAL NOTES:
       }));
 
       setIsLoggedIn(true);
+      setTvaProfile(tvaProfile);
+      setUserRole(role);
       setInputs(prev => ({ ...prev, profileName: displayName, profileEmpId: user.username || empId }));
-
-      // Auto-populate client from TVA role
-      if (tvaProfile) {
-        if (role === 'admin' || role === 'programmanager') {
-          // Admins/PMs get all clients — leave as is
-        } else if (tvaProfile.name) {
-          // Show a welcome message with their real name from timesheet
-        }
-      }
-
       showToast(`✓ Welcome, ${displayName}!`);
       setCurrentPage('dashboard');
 
@@ -1794,6 +1789,8 @@ TECHNICAL NOTES:
                   localStorage.removeItem('authToken');
                   localStorage.removeItem('user');
                   setIsLoggedIn(false);
+                  setTvaProfile(null);
+                  setUserRole('employee');
                   setInputs(prev => ({ ...prev, profileName: '', profileEmpId: '' }));
                   setCurrentPage('login');
                   setGenerations([]);
@@ -2335,61 +2332,64 @@ TECHNICAL NOTES:
                       ))}
                     </div>
 
-                    {/* PROFILE SETTINGS TAB */}
+                    {/* PROFILE SETTINGS TAB — TVA Identity (read-only, synced from timesheet) */}
                     {activeSettingsTab === 'profile' && (
-                      <div className="bg-card border border-slate-200/80 dark:border-[#1e293b]/50 rounded-xl p-5 space-y-4 shadow-sm text-slate-800 dark:text-white">
+                      <div className="bg-card border border-slate-200/80 dark:border-[#1e293b]/50 rounded-xl p-5 space-y-5 shadow-sm text-slate-800 dark:text-white">
+                        {/* Header */}
                         <div className="flex items-center justify-between">
                           <h3 className="text-xs font-black uppercase text-slate-500 dark:text-gray-400 tracking-wider flex items-center gap-2">
-                            <User size={13} /> Edit Profile Identity
+                            <User size={13} /> Identity Profile
                           </h3>
-                          <button 
-                            onClick={handleSaveProfile}
-                            className="bg-indigo-600/10 text-indigo-600 dark:text-[#818cf8] border border-indigo-500/25 text-[9px] font-black hover:bg-indigo-500/20 px-3 py-1 rounded-md"
-                          >
-                            ✓ SAVE PROFILE
-                          </button>
+                          <span className="flex items-center gap-1.5 text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 rounded-full">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            SYNCED · IAMNEO TIMESHEET
+                          </span>
                         </div>
 
+                        {/* Avatar + name block */}
                         <div className="flex gap-4 items-center">
-                          <div className="w-12 h-12 rounded-full bg-indigo-600/10 border border-indigo-500/25 flex items-center justify-center font-black text-indigo-600 dark:text-white text-base">
-                            {inputs.profileName.split(' ').map(n=>n[0]).join('').slice(0,2)}
+                          <div className="w-14 h-14 rounded-xl bg-indigo-600/10 border border-indigo-500/25 flex items-center justify-center font-black text-indigo-400 text-lg shrink-0">
+                            {(tvaProfile?.name || inputs.profileName || 'U').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase()}
                           </div>
                           <div>
-                            <div className="text-sm font-bold text-slate-800 dark:text-white">{inputs.profileName}</div>
-                            <div className="text-[10px] text-slate-400 dark:text-gray-500 font-mono">ID: {inputs.profileEmpId}</div>
+                            <div className="text-base font-black text-white">{tvaProfile?.name || inputs.profileName}</div>
+                            <div className="text-[10px] text-slate-400 font-mono mt-0.5">{tvaProfile?.email || '—'}</div>
+                            <div className="mt-1">
+                              <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full border ${
+                                tvaProfile?.role === 'admin' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
+                                tvaProfile?.role === 'teamlead' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                                tvaProfile?.role === 'programmanager' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                                tvaProfile?.role === 'hr' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
+                                'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                              }`}>
+                                {tvaProfile?.role || 'employee'}
+                              </span>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-1">
-                            <label className="text-[9px] font-extrabold text-[#6b7280] uppercase tracking-wider">FULL USER NAME</label>
-                            <input 
-                              type="text" 
-                              value={inputs.profileName}
-                              onChange={(e) => setInputs({ ...inputs, profileName: e.target.value })}
-                              className="w-full bg-slate-50 dark:bg-[#1a1a20] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[9px] font-extrabold text-[#6b7280] uppercase tracking-wider">EMPLOYEE MANAGER ID</label>
-                            <input 
-                              type="text" 
-                              value={inputs.profileEmpId}
-                              onChange={(e) => setInputs({ ...inputs, profileEmpId: e.target.value })}
-                              className="w-full bg-slate-50 dark:bg-[#1a1a20] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500 font-mono"
-                            />
-                          </div>
+                        {/* Detail grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {[
+                            { label: 'EMPLOYEE ID',  value: tvaProfile?.employeeId || inputs.profileEmpId },
+                            { label: 'FULL NAME',    value: tvaProfile?.name || inputs.profileName },
+                            { label: 'EMAIL',        value: tvaProfile?.email || '—' },
+                            { label: 'ROLE',         value: (tvaProfile?.role || 'employee').toUpperCase() },
+                            { label: 'TEAM LEAD',    value: tvaProfile?.teamLead || 'Not assigned' },
+                            { label: 'AUTH SOURCE',  value: 'iamneo Timesheet System' },
+                          ].map(({ label, value }) => (
+                            <div key={label} className="space-y-1">
+                              <div className="text-[9px] font-extrabold text-slate-500 dark:text-[#6b7280] uppercase tracking-wider">{label}</div>
+                              <div className="w-full bg-slate-50 dark:bg-[#1a1a20] border border-slate-200 dark:border-white/[0.06] rounded-lg px-3 py-2.5 text-xs text-slate-800 dark:text-slate-300 font-mono select-all">
+                                {value}
+                              </div>
+                            </div>
+                          ))}
                         </div>
 
-                        <div className="space-y-1">
-                          <label className="text-[9px] font-extrabold text-[#6b7280] uppercase tracking-wider">DEPARTMENT RAIL</label>
-                          <input 
-                            type="text" 
-                            value={inputs.profileDept}
-                            onChange={(e) => setInputs({ ...inputs, profileDept: e.target.value })}
-                            className="w-full bg-slate-50 dark:bg-[#1a1a20] border border-slate-200 dark:border-white/10 rounded-lg p-2.5 text-xs text-slate-800 dark:text-white focus:outline-none focus:border-indigo-500"
-                          />
-                        </div>
+                        <p className="text-[9px] text-slate-500 dark:text-slate-600 font-mono">
+                          Profile data is read-only — managed by iamneo Timesheet. Changes sync automatically on each login.
+                        </p>
                       </div>
                     )}
 

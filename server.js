@@ -573,20 +573,14 @@ app.get("/api/health", (req, res) => {
         }
       }
 
-      // ── Step 2: Local F.R.I.D.A.Y auth fallback ───────────────────────────
-      const user = await User.findOne({ username: loginId });
-      if (!user) return res.status(401).json({ error: 'Invalid credentials' });
-
-      const isValid = await bcrypt.compare(password, user.passwordHash);
-      if (!isValid) return res.status(401).json({ error: 'Invalid credentials' });
-
-      const token = jwt.sign(
-        { userId: user._id, username: user.username, displayName: user.displayName, role: user.tvaRole || 'employee' },
-        JWT_SECRET,
-        { expiresIn: '24h' }
-      );
-
-      res.json({ token, username: user.username, displayName: user.displayName, role: user.tvaRole || 'employee' });
+      // ── Step 2: No TVA configured — reject login ──────────────────────────
+      // F.R.I.D.A.Y only accepts iamneo Timesheet credentials.
+      // Set TVA_AUTH_URL in your environment to enable login.
+      return res.status(401).json({
+        error: TVA_AUTH_URL
+          ? 'Timesheet server unreachable. Please try again.'
+          : 'Authentication service not configured. Contact your administrator.'
+      });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
