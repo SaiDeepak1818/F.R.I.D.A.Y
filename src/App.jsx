@@ -1689,7 +1689,7 @@ TECHNICAL NOTES:
                 )}
                 title="Dashboard"
               >
-                <LayoutDashboard size={16} />
+                <Zap size={16} className={cn(currentPage === 'dashboard' && "fill-white/20")} />
               </button>
 
               <div className="w-6 h-[1px] bg-slate-200/60 dark:bg-slate-800/60" />
@@ -1705,7 +1705,7 @@ TECHNICAL NOTES:
                 )}
                 title="Generate"
               >
-                <Zap size={16} className={cn(currentPage === 'generate' && "fill-white/20")} />
+                <LayoutDashboard size={16} />
               </button>
 
               {/* 3 · Tracks — Content Bank */}
