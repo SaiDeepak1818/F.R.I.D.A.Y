@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: questai-app
+    name: friday-app
     runtime: node
     buildCommand: npm install && npm run build
     startCommand: node server.js
@@ -14,17 +14,19 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: MCP_SECRET
-        value: questai-mcp-2025
+        value: friday-mcp-2025
+      - key: TVA_AUTH_URL
+        sync: false
 
   - type: web
-    name: questai-mcp
+    name: friday-mcp
     runtime: node
     buildCommand: npm install
     startCommand: node mcp-server.js
     envVars:
-      - key: QUESTAI_URL
+      - key: FRIDAY_URL
         sync: false
       - key: MCP_SECRET
-        value: questai-mcp-2025
+        value: friday-mcp-2025
       - key: MCP_AUTH_TOKEN
         sync: false

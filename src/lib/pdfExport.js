@@ -159,7 +159,7 @@ export async function downloadQuestionsAsPDF(questions, options = {}) {
     pdf.setFont('Helvetica', 'normal');
     pdf.setFontSize(7.5);
     pdf.setTextColor(148, 163, 184); // slate-400
-    pdf.text('QuestAI • Enterprise Content Engineering Ecosystem', 15, 288);
+    pdf.text('F.R.I.D.A.Y • Enterprise Content Engineering Ecosystem', 15, 288);
     pdf.text(`Page ${pageNum}`, 185, 288, { align: 'right' });
   };
 
@@ -382,6 +382,6 @@ export async function downloadQuestionsAsPDF(questions, options = {}) {
   });
 
   // Final document binary layout save
-  const sanitizedTopic = String(course || 'QuestAI_Report').replace(/[^a-z0-9]/gi, '_').toLowerCase();
-  doc.save(`QuestAI_Report_Badged_${sanitizedTopic}.pdf`);
+  const sanitizedTopic = String(course || 'FRIDAY_Report').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+  doc.save(`FRIDAY_Report_Badged_${sanitizedTopic}.pdf`);
 }

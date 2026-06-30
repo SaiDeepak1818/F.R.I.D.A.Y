@@ -15,7 +15,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key-change-in-production';
+const JWT_SECRET    = process.env.JWT_SECRET    || 'dev-secret-key-change-in-production';
+const TVA_AUTH_URL  = process.env.TVA_AUTH_URL;  // e.g. https://timesheet.iamneo.ai
 const BCRYPT_ROUNDS = 10;
 
 // MongoDB Connection Setup
@@ -74,12 +75,18 @@ const GenerationSchema = new mongoose.Schema({
 
 const Generation = mongoose.model("Generation", GenerationSchema);
 
-// User schema for simple auth (demo - SHA256 hashed passwords)
+// User schema — supports both local auth and TVA timesheet auth
 const UserSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
+  username:     { type: String, unique: true },   // employeeId from TVA, or custom
   passwordHash: String,
-  displayName: String,
-  createdAt: { type: Date, default: Date.now }
+  displayName:  String,
+  // TVA Timesheet profile fields (populated on TVA login, auto-synced each session)
+  employeeId:   { type: String, default: null },
+  email:        { type: String, default: null },
+  tvaRole:      { type: String, default: 'employee' }, // admin|teamlead|employee|programmanager|hr
+  teamLead:     { type: String, default: null },
+  tvaProfile:   { type: mongoose.Schema.Types.Mixed, default: null },
+  createdAt:    { type: Date, default: Date.now }
 });
 const User = mongoose.model('User', UserSchema);
 
@@ -492,30 +499,119 @@ app.get("/api/health", (req, res) => {
     }
   });
 
-  // Simple login route
+  // Login — tries TVA timesheet first, falls back to local F.R.I.D.A.Y auth
   app.post('/api/login', async (req, res) => {
     try {
-      const { username, password } = req.body;
-      if (!username || !password) return res.status(400).json({ error: 'Missing credentials' });
+      const { username, password, employeeId } = req.body;
+      const loginId = (employeeId || username || '').trim();
+      if (!loginId || !password) return res.status(400).json({ error: 'Missing credentials' });
 
-      const user = await User.findOne({ username });
-      if (!user) return res.status(401).json({ error: 'Invalid username or password' });
+      // ── Step 1: TVA Timesheet Auth ─────────────────────────────────────────
+      if (TVA_AUTH_URL) {
+        try {
+          const tvaResp = await fetch(`${TVA_AUTH_URL}/api/auth/login`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ employeeId: loginId, password }),
+            signal:  AbortSignal.timeout(8000)
+          });
 
-      // Use bcrypt for password comparison (works with both old SHA256 and new bcrypt hashes)
+          if (tvaResp.ok) {
+            const tvaData = await tvaResp.json();
+            const tv = tvaData.user;
+
+            // Upsert user in F.R.I.D.A.Y DB — sync TVA profile on every login
+            let user = await User.findOne({ username: tv.employeeId });
+            if (!user) {
+              user = new User({
+                username:     tv.employeeId,
+                passwordHash: await bcrypt.hash(password, BCRYPT_ROUNDS),
+                displayName:  tv.name,
+                employeeId:   tv.employeeId,
+                email:        tv.email || null,
+                tvaRole:      tv.role,
+                teamLead:     tv.teamLead || null,
+                tvaProfile:   tv
+              });
+              await user.save().catch(() => {});
+            } else {
+              user.displayName = tv.name;
+              user.email       = tv.email || user.email;
+              user.tvaRole     = tv.role;
+              user.teamLead    = tv.teamLead || null;
+              user.tvaProfile  = tv;
+              await user.save().catch(() => {});
+            }
+
+            const token = jwt.sign(
+              {
+                userId:      user._id,
+                username:    tv.employeeId,
+                displayName: tv.name,
+                role:        tv.role,
+                tvaProfile:  tv
+              },
+              JWT_SECRET,
+              { expiresIn: '24h' }
+            );
+
+            return res.json({
+              token,
+              username:    tv.employeeId,
+              displayName: tv.name,
+              role:        tv.role,
+              tvaProfile:  tv
+            });
+          }
+
+          if (tvaResp.status === 401) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+          }
+          // TVA server error — fall through to local auth
+        } catch (tvaErr) {
+          console.warn('[TVA Auth] Unreachable, falling back to local auth:', tvaErr.message);
+        }
+      }
+
+      // ── Step 2: Local F.R.I.D.A.Y auth fallback ───────────────────────────
+      const user = await User.findOne({ username: loginId });
+      if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
       const isValid = await bcrypt.compare(password, user.passwordHash);
-      if (!isValid) return res.status(401).json({ error: 'Invalid username or password' });
+      if (!isValid) return res.status(401).json({ error: 'Invalid credentials' });
 
-      // Generate JWT token
       const token = jwt.sign(
-        { userId: user._id, username: user.username },
+        { userId: user._id, username: user.username, displayName: user.displayName, role: user.tvaRole || 'employee' },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
 
+      res.json({ token, username: user.username, displayName: user.displayName, role: user.tvaRole || 'employee' });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  // Current user profile — returns TVA data if available
+  app.get('/api/me', verifyToken, async (req, res) => {
+    try {
+      if (req.user.tvaProfile) {
+        return res.json({
+          userId:      req.user.userId,
+          username:    req.user.username,
+          displayName: req.user.displayName,
+          role:        req.user.role,
+          tvaProfile:  req.user.tvaProfile
+        });
+      }
+      const user = await User.findById(req.user.userId).select('-passwordHash');
+      if (!user) return res.status(404).json({ error: 'User not found' });
       res.json({
-        token,
-        username: user.username,
-        displayName: user.displayName
+        userId:      user._id,
+        username:    user.username,
+        displayName: user.displayName,
+        role:        user.tvaRole || 'employee',
+        tvaProfile:  user.tvaProfile || null
       });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -1338,7 +1434,7 @@ Generate:
   // POST /api/mcp/trigger — MCP server calls this to start a generation job
   app.post('/api/mcp/trigger', async (req, res) => {
     const secret = req.headers['x-mcp-secret'];
-    if (secret !== (process.env.MCP_SECRET || 'questai-mcp-2025')) {
+    if (secret !== (process.env.MCP_SECRET || 'friday-mcp-2025')) {
       return res.status(401).json({ error: 'Unauthorized — wrong MCP secret' });
     }
     const { topic, type = 'coding', count = 10, track = 'DSA', client = 'General', difficulty = 'Medium', source = 'non-leetcode' } = req.body;
@@ -1400,7 +1496,7 @@ Generate:
   // POST /api/mcp/notify — MCP server posts job updates (Claude generates directly, this just tracks state)
   app.post('/api/mcp/notify', (req, res) => {
     const secret = req.headers['x-mcp-secret'];
-    if (secret !== (process.env.MCP_SECRET || 'questai-mcp-2025')) {
+    if (secret !== (process.env.MCP_SECRET || 'friday-mcp-2025')) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
     const { jobId, topic, type, count, track, client, course, status, result } = req.body;
@@ -1429,7 +1525,7 @@ Generate:
   // POST /api/mcp/save — saves Claude-generated questions from MCP session
   app.post('/api/mcp/save', async (req, res) => {
     const secret = req.headers['x-mcp-secret'];
-    if (secret !== (process.env.MCP_SECRET || 'questai-mcp-2025')) {
+    if (secret !== (process.env.MCP_SECRET || 'friday-mcp-2025')) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
     const { jobId, questions, topic, type, track, client, course, difficulty } = req.body;
@@ -1465,7 +1561,7 @@ Generate:
   // POST /api/mcp/save-planner — saves Claude-generated planner from MCP session
   app.post('/api/mcp/save-planner', async (req, res) => {
     const secret = req.headers['x-mcp-secret'];
-    if (secret !== (process.env.MCP_SECRET || 'questai-mcp-2025')) {
+    if (secret !== (process.env.MCP_SECRET || 'friday-mcp-2025')) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
     const { jobId, courseName, track, client, weeks } = req.body;

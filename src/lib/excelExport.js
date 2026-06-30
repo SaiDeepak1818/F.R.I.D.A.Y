@@ -33,5 +33,5 @@ export function downloadMCQsAsExcel(questions, topic) {
   ];
   worksheet['!cols'] = wscols;
 
-  XLSX.writeFile(workbook, `QuestAi_MCQs_${topic.replace(/\s+/g, '_')}.xlsx`);
+  XLSX.writeFile(workbook, `FRIDAY_MCQs_${topic.replace(/\s+/g, '_')}.xlsx`);
 }

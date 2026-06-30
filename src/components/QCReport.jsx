@@ -45,7 +45,7 @@ export function QCReport({ topic, questions, type, onClose }) {
         }
       }
 
-      pdf.save(`QuestAi_QC_${topic.replace(/\s+/g, '_')}.pdf`);
+      pdf.save(`FRIDAY_QC_${topic.replace(/\s+/g, '_')}.pdf`);
     } catch (error) {
       console.error('PDF Generation failed:', error);
     } finally {
@@ -185,7 +185,7 @@ export function QCReport({ topic, questions, type, onClose }) {
                   <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
                     <Activity size={20}/>
                   </div>
-                  <span className="text-[11px] font-black uppercase tracking-[0.3em]">QuestAi Intelligence Protocol Alpha-9</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.3em]">F.R.I.D.A.Y Intelligence Protocol Alpha-9</span>
                </div>
                <div className="flex items-center gap-8 font-mono text-[10px] uppercase">
                   <span>Timestamp: {new Date().toISOString()}</span>

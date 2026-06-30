@@ -113,7 +113,7 @@ export function generatePlannerQCPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
   setFont(doc, C.white);
-  doc.text('⚡  QUESTAI  ·  Content Quality & Alignment Report', MARGIN, 10);
+  doc.text('⚡  F.R.I.D.A.Y  ·  Content Quality & Alignment Report', MARGIN, 10);
   doc.setFontSize(8);
   doc.setFont('helvetica', 'normal');
   setFont(doc, [200, 220, 255]);
@@ -397,7 +397,7 @@ export function generatePlannerQCPdf({
   doc.setFontSize(7);
   setFont(doc, C.dim);
   doc.text(
-    `QuestAI · Planner Quality Report · ${new Date().toLocaleString('en-IN')}`,
+    `F.R.I.D.A.Y · Planner Quality Report · ${new Date().toLocaleString('en-IN')}`,
     PW / 2, lastY,
     { align: 'center' }
   );

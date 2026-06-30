@@ -1,10 +1,10 @@
 /**
- * QuestAI MCP Server — Claude-native generation
+ * F.R.I.D.A.Y MCP Server — Claude-native generation
  *
  * NO external API calls for generation.
  * The tool provides the prompt structure and schema to Claude,
  * Claude generates using its own model in the current session.
- * The QuestAI app gets notified for the live timer overlay.
+ * The F.R.I.D.A.Y app gets notified for the live timer overlay.
  */
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -14,8 +14,8 @@ import { z } from 'zod';
 import http from 'http';
 import crypto from 'crypto';
 
-const QUESTAI_URL = process.env.QUESTAI_URL || 'http://localhost:3000';
-const MCP_SECRET  = process.env.MCP_SECRET  || 'questai-mcp-2025';
+const QUESTAI_URL = process.env.FRIDAY_URL || process.env.QUESTAI_URL || 'http://localhost:3000';
+const MCP_SECRET  = process.env.MCP_SECRET  || 'friday-mcp-2025';
 
 // ── TVA data ──────────────────────────────────────────────────────────────────
 const TVA_CLIENTS = [
@@ -30,7 +30,7 @@ const TVA_TRACKS = [
   'AWS', 'Azure', 'Docker', 'AI/ML', 'Cybersecurity', 'SDET', 'SAP', 'DAA'
 ];
 
-// ── Notify QuestAI frontend (for the live timer overlay) ──────────────────────
+// ── Notify F.R.I.D.A.Y frontend (for the live timer overlay) ──────────────────────
 async function notifyFrontend(jobId, topic, type, count, track, client, course, status) {
   try {
     await fetch(`${QUESTAI_URL}/api/mcp/notify`, {
@@ -46,12 +46,12 @@ async function notifyFrontend(jobId, topic, type, count, track, client, course, 
 // ── Factory: create a fresh McpServer with all tools registered ───────────────
 // One instance per session for correct HTTP session isolation.
 function buildServer() {
-  const s = new McpServer({ name: 'questai', version: '3.0.0' });
+  const s = new McpServer({ name: 'friday', version: '3.0.0' });
 
   // ── Tool: generate_questions ──────────────────────────────────────────────
   s.tool(
     'generate_questions',
-    'Prepares a structured generation prompt for Claude to create coding or MCQ questions. Claude generates using its own model — no external API needed. The QuestAI app will show a live timer.',
+    'Prepares a structured generation prompt for Claude to create coding or MCQ questions. Claude generates using its own model — no external API needed. The F.R.I.D.A.Y app will show a live timer.',
     {
       topic:      z.string().describe('Topic (e.g. "Binary Search Trees", "Java Generics", "SQL Joins")'),
       type:       z.enum(['coding', 'mcq']).default('coding'),
@@ -79,7 +79,7 @@ function buildServer() {
         return {
           content: [{
             type: 'text',
-            text: `[QuestAI timer started — ${QUESTAI_URL}]
+            text: `[F.R.I.D.A.Y timer started — ${QUESTAI_URL}]
 Job ID: ${jobId}
 
 Generate exactly ${count} ${difficulty} coding challenge(s) about **"${topic}"** for the **${track}** track.
@@ -135,14 +135,14 @@ Rules:
 - testCases MUST have exactly 15 entries: first 3 public (isPublic: true, match sampleInput/sampleOutput + one variation), then 12 private (isPublic: false) covering edge cases, stress tests, boundary values, special cases
 - Return the JSON immediately, no preamble
 
-After generating the JSON, call **questai.save_questions** with jobId="${jobId}", type="${type}", track="${track}", course="${course}", client="${client}", difficulty="${difficulty}", and the questions JSON string to save to QuestAI.`
+After generating the JSON, call **friday.save_questions** with jobId="${jobId}", type="${type}", track="${track}", course="${course}", client="${client}", difficulty="${difficulty}", and the questions JSON string to save to F.R.I.D.A.Y.`
           }]
         };
       } else {
         return {
           content: [{
             type: 'text',
-            text: `[QuestAI timer started — ${QUESTAI_URL}]
+            text: `[F.R.I.D.A.Y timer started — ${QUESTAI_URL}]
 Job ID: ${jobId}
 
 Generate exactly ${count} ${difficulty} MCQ questions about **"${topic}"** for the **${track}** track.
@@ -174,7 +174,7 @@ Rules:
 - All wrong options must be plausible
 - Return JSON immediately, no preamble
 
-After generating the JSON, call **questai.save_questions** with jobId="${jobId}", type="${type}", track="${track}", course="${course}", client="${client}", difficulty="${difficulty}", and the questions JSON string to save to QuestAI.`
+After generating the JSON, call **friday.save_questions** with jobId="${jobId}", type="${type}", track="${track}", course="${course}", client="${client}", difficulty="${difficulty}", and the questions JSON string to save to F.R.I.D.A.Y.`
           }]
         };
       }
@@ -184,7 +184,7 @@ After generating the JSON, call **questai.save_questions** with jobId="${jobId}"
   // ── Tool: save_questions ──────────────────────────────────────────────────
   s.tool(
     'save_questions',
-    'Saves Claude-generated questions to the QuestAI app and marks the generation complete (closes the timer overlay). Call this after Claude generates the JSON from generate_questions.',
+    'Saves Claude-generated questions to the F.R.I.D.A.Y app and marks the generation complete (closes the timer overlay). Call this after Claude generates the JSON from generate_questions.',
     {
       jobId:      z.string().describe('The Job ID returned by generate_questions'),
       questions:  z.string().describe('The full JSON string of generated questions'),
@@ -220,8 +220,8 @@ After generating the JSON, call **questai.save_questions** with jobId="${jobId}"
         content: [{
           type: 'text',
           text: [
-            `✅ ${parsed.length} questions saved to QuestAI`,
-            saved ? `📂 Open Content Bank → ${QUESTAI_URL}` : `⚠️ QuestAI server not running — questions saved in session only`,
+            `✅ ${parsed.length} questions saved to F.R.I.D.A.Y`,
+            saved ? `📂 Open Content Bank → ${QUESTAI_URL}` : `⚠️ F.R.I.D.A.Y server not running — questions saved in session only`,
             '',
             'Summary:',
             ...parsed.slice(0, 5).map((q, i) =>
@@ -262,7 +262,7 @@ After generating the JSON, call **questai.save_questions** with jobId="${jobId}"
       return {
         content: [{
           type: 'text',
-          text: `[QuestAI Planner overlay started — ${QUESTAI_URL}]
+          text: `[F.R.I.D.A.Y Planner overlay started — ${QUESTAI_URL}]
 Job ID: ${jobId}
 
 Generate a complete content planner for **"${courseName}"** (${track} · ${client}).
@@ -305,7 +305,7 @@ Rules:
 Weeks to generate (${parsedWeeks.length} total):
 ${parsedWeeks.map(w => `  Week ${w.weekNumber}: ${w.topic}${w.subtopics?.length ? ` | ${w.subtopics.slice(0,4).join(', ')}` : ''}`).join('\n')}
 
-After generating the complete JSON, call **questai.save_planner** with jobId="${jobId}", courseName="${courseName}", track="${track}", client="${client}", and the full planner JSON string.`
+After generating the complete JSON, call **friday.save_planner** with jobId="${jobId}", courseName="${courseName}", track="${track}", client="${client}", and the full planner JSON string.`
         }]
       };
     }
@@ -314,7 +314,7 @@ After generating the complete JSON, call **questai.save_planner** with jobId="${
   // ── Tool: save_planner ────────────────────────────────────────────────────
   s.tool(
     'save_planner',
-    'Saves Claude-generated content planner to QuestAI and closes the generation overlay. Call this after generating the full planner JSON from generate_planner.',
+    'Saves Claude-generated content planner to F.R.I.D.A.Y and closes the generation overlay. Call this after generating the full planner JSON from generate_planner.',
     {
       jobId:      z.string().describe('The Job ID returned by generate_planner'),
       planner:    z.string().describe('The full JSON string of the generated planner with weeks array'),
@@ -347,8 +347,8 @@ After generating the complete JSON, call **questai.save_planner** with jobId="${
         content: [{
           type: 'text',
           text: [
-            `✅ ${weeks.length}-week planner saved to QuestAI (${totalQ} questions total)`,
-            saved ? `📂 Open Content Planner → ${QUESTAI_URL}` : `⚠️ QuestAI server not running — saved in session only`,
+            `✅ ${weeks.length}-week planner saved to F.R.I.D.A.Y (${totalQ} questions total)`,
+            saved ? `📂 Open Content Planner → ${QUESTAI_URL}` : `⚠️ F.R.I.D.A.Y server not running — saved in session only`,
             '',
             'Summary:',
             ...weeks.slice(0, 6).map(w => {
@@ -363,13 +363,13 @@ After generating the complete JSON, call **questai.save_planner** with jobId="${
   );
 
   // ── Tool: list_tracks ─────────────────────────────────────────────────────
-  s.tool('list_tracks', 'List all QuestAI technology tracks.', {}, async () => ({
-    content: [{ type: 'text', text: '# QuestAI Tracks\n\n' + TVA_TRACKS.map((t,i) => `${i+1}. ${t}`).join('\n') }]
+  s.tool('list_tracks', 'List all F.R.I.D.A.Y technology tracks.', {}, async () => ({
+    content: [{ type: 'text', text: '# F.R.I.D.A.Y Tracks\n\n' + TVA_TRACKS.map((t,i) => `${i+1}. ${t}`).join('\n') }]
   }));
 
   // ── Tool: list_clients ────────────────────────────────────────────────────
-  s.tool('list_clients', 'List all QuestAI TVA clients.', {}, async () => ({
-    content: [{ type: 'text', text: '# QuestAI Clients\n\n' + TVA_CLIENTS.map((c,i) => `${i+1}. ${c}`).join('\n') }]
+  s.tool('list_clients', 'List all F.R.I.D.A.Y TVA clients.', {}, async () => ({
+    content: [{ type: 'text', text: '# F.R.I.D.A.Y Clients\n\n' + TVA_CLIENTS.map((c,i) => `${i+1}. ${c}`).join('\n') }]
   }));
 
   return s;
@@ -416,7 +416,7 @@ if (HTTP_PORT) {
     // Health check
     if (req.method === 'GET' && url.pathname === '/health') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ ok: true, service: 'questai-mcp', version: '3.0.0', sessions: sessions.size }));
+      res.end(JSON.stringify({ ok: true, service: 'friday-mcp', version: '3.0.0', sessions: sessions.size }));
       return;
     }
 
@@ -504,7 +504,7 @@ if (HTTP_PORT) {
     if (!bearerToken || !oauthTokens.has(bearerToken)) {
       res.writeHead(401, {
         'Content-Type':    'application/json',
-        'WWW-Authenticate': 'Bearer realm="QuestAI MCP"'
+        'WWW-Authenticate': 'Bearer realm="F.R.I.D.A.Y MCP"'
       });
       res.end(JSON.stringify({ error: 'Unauthorized' }));
       return;
@@ -552,8 +552,8 @@ if (HTTP_PORT) {
   });
 
   httpServer.listen(HTTP_PORT, () => {
-    console.error(`[QuestAI MCP] HTTP server listening on port ${HTTP_PORT}`);
-    console.error(`[QuestAI MCP] OAuth discovery → ${MCP_SERVER_URL}/.well-known/oauth-authorization-server`);
+    console.error(`[F.R.I.D.A.Y MCP] HTTP server listening on port ${HTTP_PORT}`);
+    console.error(`[F.R.I.D.A.Y MCP] OAuth discovery → ${MCP_SERVER_URL}/.well-known/oauth-authorization-server`);
   });
 
 } else {

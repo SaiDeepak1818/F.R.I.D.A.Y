@@ -464,7 +464,7 @@ TECHNICAL NOTES:
         const user = JSON.parse(savedUser);
         setInputs(prev => ({
           ...prev,
-          profileName: user.displayName || user.username,
+          profileName:  user.displayName || user.username,
           profileEmpId: user.username
         }));
         setIsLoggedIn(true);
@@ -718,7 +718,7 @@ TECHNICAL NOTES:
     const type = generationMode === 'coding' ? 'coding' : 'mcq';
     const format = getActiveFormat();
     const lines = [
-      `Use questai generate_questions with these parameters:`,
+      `Use friday.generate_questions with these parameters:`,
       `  topic: "${topic}"`,
       `  type: ${type}`,
       `  count: ${count}`,
@@ -743,14 +743,14 @@ TECHNICAL NOTES:
     if (!courseName?.trim()) { showToast('Enter a course name first!', true); return; }
     if (!track) { showToast('Select a track first!', true); return; }
     const lines = [
-      `I need to generate a QuestAI Content Planner. Please:`,
+      `I need to generate a F.R.I.D.A.Y Content Planner. Please:`,
       ``,
       `1. Read my attached Excel planner file to extract:`,
       `   - Week number from the "Week" column`,
       `   - Topic from the "Topic" column`,
       `   - Subtopics from the "Subtopics" column (comma-separated, optional)`,
       ``,
-      `2. Call questai.generate_planner with these parameters:`,
+      `2. Call friday.generate_planner with these parameters:`,
       `   courseName: "${courseName}"`,
       `   track: "${track}"`,
       `   client: "${client || 'General'}"`,
@@ -761,7 +761,7 @@ TECHNICAL NOTES:
       ``,
       `3. Generate coding questions for every week as instructed by the tool.`,
       ``,
-      `4. Call questai.save_planner with jobId, courseName, track, client, and the full planner JSON.`,
+      `4. Call friday.save_planner with jobId, courseName, track, client, and the full planner JSON.`,
     ];
     setMcpPromptText(lines.join('\n'));
     setMcpPromptModal(true);
@@ -1265,50 +1265,54 @@ TECHNICAL NOTES:
   const [registerId, setRegisterId] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
 
-  // Login against the server so protected generation routes receive a real JWT.
+  // Login — uses TVA timesheet credentials, falls back to local auth
   const handleLoginSubmit = async () => {
     if (!loginIdInput.trim() || !loginPasswordInput.trim()) return showToast('Enter credentials', true);
     setIsLoggingIn(true);
 
     try {
-      const username = loginIdInput.trim();
+      const empId    = loginIdInput.trim();
       const password = loginPasswordInput.trim();
-      const fallbackDisplayName = username.charAt(0).toUpperCase() + username.slice(1);
 
-      let response = await fetch('/api/login', {
-        method: 'POST',
+      const response = await fetch('/api/login', {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body:    JSON.stringify({ username: empId, employeeId: empId, password })
       });
-
-      if (response.status === 401) {
-        response = await fetch('/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password, displayName: fallbackDisplayName })
-        });
-      }
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        throw new Error(error.error || 'Login failed');
+        throw new Error(error.error || 'Invalid credentials');
       }
 
-      const user = await response.json();
-      const displayName = user.displayName || user.username || fallbackDisplayName;
+      const user        = await response.json();
+      const displayName = user.displayName || user.username || empId;
+      const tvaProfile  = user.tvaProfile  || null;
+      const role        = user.role         || 'employee';
 
       localStorage.setItem('authToken', user.token);
       localStorage.setItem('user', JSON.stringify({
-        username: user.username || username,
-        displayName: displayName
+        username:    user.username || empId,
+        displayName: displayName,
+        role,
+        tvaProfile
       }));
 
       setIsLoggedIn(true);
-      setInputs(prev => ({ ...prev, profileName: displayName, profileEmpId: user.username || username }));
+      setInputs(prev => ({ ...prev, profileName: displayName, profileEmpId: user.username || empId }));
+
+      // Auto-populate client from TVA role
+      if (tvaProfile) {
+        if (role === 'admin' || role === 'programmanager') {
+          // Admins/PMs get all clients — leave as is
+        } else if (tvaProfile.name) {
+          // Show a welcome message with their real name from timesheet
+        }
+      }
+
       showToast(`✓ Welcome, ${displayName}!`);
       setCurrentPage('dashboard');
 
-      // Clear inputs
       setLoginIdInput('');
       setLoginPasswordInput('');
     } catch (err) {
@@ -1389,7 +1393,7 @@ TECHNICAL NOTES:
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `QuestAI_Coding_${activeGeneration.topic.replace(/\s+/g, '_')}.json`;
+      a.download = `FRIDAY_Coding_${activeGeneration.topic.replace(/\s+/g, '_')}.json`;
       a.click();
       showToast('Saved JSON descriptor dataset!');
     }
@@ -1612,7 +1616,7 @@ TECHNICAL NOTES:
                   <span className="w-5 h-[1.5px] bg-blue-500/30 inline-block" />
                   SESSION_INIT
                 </div>
-                <h2 className="text-2xl font-black tracking-tight text-white mb-1.5">QuestAi Application</h2>
+                <h2 className="text-2xl font-black tracking-tight text-white mb-1.5">F.R.I.D.A.Y</h2>
                 <div className="text-xs text-emerald-400 font-mono mb-6">{`>_ AWAITING_CREDENTIALS`}</div>
 
                 {/* Role Tabs layout removed to keep login focused on employee access only */}
@@ -3487,7 +3491,7 @@ TECHNICAL NOTES:
                   </div>
                 </div>
                 <div className="font-mono">
-                  {currentTime} IST · v3.0.0 · QuestAI
+                  {currentTime} IST · v3.0.0 · F.R.I.D.A.Y
                 </div>
               </div>
 
@@ -3773,7 +3777,7 @@ TECHNICAL NOTES:
                 <pre className="text-[11px] text-slate-300 font-mono p-4 overflow-x-auto whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">{mcpPromptText}</pre>
               </div>
               <p className="text-[9px] text-slate-600 font-mono mt-2">
-                Tip: paste this into Claude Code tab → Claude calls questai tools → questions appear in your course card.
+                Tip: paste this into Claude Code tab → Claude calls friday tools → questions appear in your course card.
               </p>
             </div>
 
